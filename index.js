@@ -27,8 +27,8 @@ const getConfig = (username, password, extraAttributes) => {
     }
 };
 
-const getADUserInfo = (username) => {
-    const config = getConfig();
+const getADUserInfo = (username, attributes) => {
+    const config = getConfig(null, null, attributes);
     const ad = new ActiveDirectory(config);
     
     return new Promise((resolve, reject) => {
