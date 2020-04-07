@@ -34,3 +34,16 @@ Authenticates with a default user whose sAMAccountName and password are defined 
 - mail (email)
 - l (location)
 - ... any attributes included in the optional 3rd argument (an array of strings)
+
+getADUserGroups(username: string, attributes?: Array<string>): Promise<Array<Group>|null>
+Authenticates with a default user whose sAMAccountName and password are defined in a .env file. If unsuccessful, it returns a Promise rejection with null.  If successful it returns a Promise resolve with the user's groups:
+        [
+            Group {
+                dn,
+                cn,
+                description,
+                distinguishedName,
+                objectCategory
+            },
+            ...
+        ]

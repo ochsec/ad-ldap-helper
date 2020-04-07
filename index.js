@@ -34,8 +34,8 @@ const getConfig = (username, password, extraAttributes) => {
     }
 };
 
-const getADUserGroups = (username, attributes) => {
-    const config = getConfig(null, null, attributes);
+const getADUserGroups = (username) => {
+    const config = getConfig(null, null, null);
     const ad = new ActiveDirectory(config);
 
     return new Promise((resolve, reject) => {
