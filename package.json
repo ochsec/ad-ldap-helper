@@ -1,6 +1,6 @@
 {
   "name": "ad-ldap-helper",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A module to authenticate / lookup users with Microsoft Active Directory",
   "main": "index.js",
   "scripts": {
