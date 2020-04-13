@@ -34,6 +34,43 @@ const getConfig = (username, password, extraAttributes) => {
     }
 };
 
+const getADGroupUsers = (groupname) => {
+    const config = getConfig(null, null, null);
+    const ad = new ActiveDirectory(config);
+
+    return new Promise((resolve, reject) => {
+        ad.authenticate(config.username, config.password, function (err, auth) {
+            if (err) {
+                console.log(errors.GENERIC(err));
+                reject(errors.GENERIC(err));
+            }
+
+            if (auth) {
+                console.log('Client user authenticated!');
+                console.log(`Finding user members of ${groupname}`);
+
+                ad.getUsersForGroup(groupname, function (err, users) {
+                    if (err) {
+                        console.log(errors.GENERIC(err));
+                        reject(errors.GENERIC(err));
+                    }
+
+                    if (!users) {
+                        console.log(errors.NOT_FOUND(groupname));
+                        reject(errors.NOT_FOUND(groupname));
+                    } else {
+                        console.log(`Found ${users.length} users for group ${groupname}.`);
+                        resolve(users);
+                    }
+                });
+            } else {
+                console.log(errors.AUTH_FAILED);
+                reject(errors.AUTH_FAILED);
+            }
+        });
+    });
+};
+
 const getADUserGroups = (username) => {
     const config = getConfig(null, null, null);
     const ad = new ActiveDirectory(config);
@@ -59,7 +96,7 @@ const getADUserGroups = (username) => {
                         console.log(errors.NOT_FOUND(username));
                         reject(errors.NOT_FOUND(username));   
                     } else {
-                        console.log(`Found ${groups.length} groups for user ${username}: `);
+                        console.log(`Found ${groups.length} groups for user ${username}.`);
                         resolve(groups);
                     }
                 });
@@ -151,4 +188,5 @@ module.exports = {
     getADUserInfo,
     getADUserGroups,
     loginADUser,
+    getADGroupUsers,
 }

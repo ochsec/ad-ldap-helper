@@ -47,3 +47,18 @@ Authenticates with a default user whose sAMAccountName and password are defined 
             },
             ...
         ]
+
+getADUsersForGroup(groupname: string): Promise<Array<User>|null>
+Authenticates with a default user whose sAMAccountName and password are defined in a .env file. If 
+unsuccessful, it returns a Promise rejection with null. If successful, it returns a Promise resolve
+with a list of users belonging to the AD group:
+        [
+            User {
+                sAMAccountName,
+                givenName,
+                sn,
+                mail,
+                l,
+            },
+            ...
+        ]
